@@ -1,8 +1,9 @@
 component "s3" {
+  for_each = toset(var.instances)
   source = "./s3"
 
   inputs = {
-    bucket_prefix = "daniels-aws-stack-demo"
+    bucket_prefix = each.value
   }
 
   providers = {
@@ -11,11 +12,12 @@ component "s3" {
 }
 
 component "lambda" {
+  for_each = toset(var.instances)
   source = "./lambda"
 
   inputs = {
     bucket_id     = component.s3.bucket_id
-    function_name = "daniels-aws-stack-demo"
+    function_name = each.value
   }
 
   providers = {
@@ -26,10 +28,11 @@ component "lambda" {
 }
 
 component "api_gateway" {
+  for_each = toset(var.instances)
   source = "./api-gateway"
 
   inputs = {
-    gateway_name         = "daniels-aws-stack-demo"
+    gateway_name         = each.value
     lambda_function_name = component.lambda.function_name
     lambda_invoke_arn    = component.lambda.invoke_arn
   }

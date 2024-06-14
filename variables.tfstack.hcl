@@ -1,6 +1,11 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
+variable "instances" {
+  type    = set(string)
+  default = ["daniels-aws-stack-demo"]
+}
+
 variable "region" {
   type = string
   default = "eu-central-1"
