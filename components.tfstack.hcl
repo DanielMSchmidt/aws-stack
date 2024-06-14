@@ -2,8 +2,7 @@ component "s3" {
   source = "./s3"
 
   inputs = {
-    region = var.region
-    bucket_name = "daniels-aws-stack-demo"
+    bucket_prefix = "daniels-aws-stack-demo"
   }
 
   providers = {
@@ -15,8 +14,8 @@ component "lambda" {
   source = "./lambda"
 
   inputs = {
-    region    = var.region
-    bucket_id = component.s3.bucket_id
+    bucket_id     = component.s3.bucket_id
+    function_name = "daniels-aws-stack-demo"
   }
 
   providers = {
@@ -30,7 +29,7 @@ component "api_gateway" {
   source = "./api-gateway"
 
   inputs = {
-    region               = var.region
+    gateway_name         = "daniels-aws-stack-demo"
     lambda_function_name = component.lambda.function_name
     lambda_invoke_arn    = component.lambda.invoke_arn
   }
