@@ -48,7 +48,7 @@ resource "aws_s3_object" "lambda_hello_world" {
  }
 
  resource "aws_iam_role" "lambda_exec" {
-   name = random_pet.lambda_function_name.id
+   name = var.function_name
 
    assume_role_policy = jsonencode({
      Version = "2012-10-17"
