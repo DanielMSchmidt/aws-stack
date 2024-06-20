@@ -16,7 +16,7 @@ component "lambda" {
   source = "./lambda"
 
   inputs = {
-    bucket_id     = component.s3.bucket_id
+    bucket_id     = component.s3[each.value].bucket_id
     function_name = each.value
   }
 
@@ -33,8 +33,8 @@ component "api_gateway" {
 
   inputs = {
     gateway_name         = each.value
-    lambda_function_name = component.lambda.function_name
-    lambda_invoke_arn    = component.lambda.invoke_arn
+    lambda_function_name = component.lambda[each.value].function_name
+    lambda_invoke_arn    = component.lambda[each.value].invoke_arn
   }
 
   providers = {
